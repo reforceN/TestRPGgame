@@ -2,7 +2,6 @@
 #include <unistd.h>
 #include "handle.h"
 #include "rpginfo.h"
-//#include "fstream"
 
 using namespace std;
 
@@ -80,13 +79,6 @@ int main(){
 
    inBiome(player1);
 
-     /*ofstream outFile("saves.dat", ios::binary);
-
-            /if (outFile.is_open()) {
-                  outFile.write(reinterpret_cast<char*>(&player1), sizeof(player));
-                  outFile.close();
-            }*/
-
    sleep(1);
 
       return 0;
@@ -130,7 +122,7 @@ int main(){
          getline(cin, firstMove);
 
          if(firstMove == "1"){
-            fightScenario(player1); //add a explore biomes later
+            fightScenario(player1);
          }
          else if(firstMove == "2"){
             cout<<"Standing still..\n";
