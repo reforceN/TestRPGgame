@@ -88,7 +88,6 @@ int main(){
         if(player1.hp <= 0){
           system("cls");
           cout<<"You died, restart the game.";
-          system("shutdown");
         }
         else{
          srand(time(NULL));
