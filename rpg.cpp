@@ -111,26 +111,26 @@ int main(){
                scenario = "Plains";
                biomeColor = 10;
                break;
-         }
+           }
         
          string firstMove;
          bool idleing=true;
          while(idleing){
-         cout<<"\n\n You are in a "; stc(biomeColor); cout<<scenario; stc(7); cout<<" biome, you can either: \n";
-         cout<<" 1 - Explore around \n 2 - Stay still\n - ";
-         getline(cin, firstMove);
+            cout<<"\n\n You are in a "; stc(biomeColor); cout<<scenario; stc(7); cout<<" biome, you can either: \n";
+            cout<<" 1 - Explore around \n 2 - Stay still\n - ";
+            getline(cin, firstMove);
 
-         if(firstMove == "1"){
-            fightScenario(player1);
-         }
-         else if(firstMove == "2"){
-            cout<<"Standing still..\n";
-            sleep(4);
-         }
-         else{
-               cout<<"Invalid\n";
-         }
-       }
+            if(firstMove == "1"){
+               fightScenario(player1); //add a explore biomes later
+            }
+            else if(firstMove == "2"){
+               cout<<"Standing still..\n";
+               sleep(4);
+            }
+            else{
+                  cout<<"Invalid\n";
+            }
+        }
      }
    }
 
