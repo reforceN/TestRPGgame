@@ -319,6 +319,7 @@ void fight(player &player1, monster &enemy){
             stc(7); cout<<" HP\n";
 
             holder();
+            sleep(2);
         }
        sleep(2);
 
@@ -329,12 +330,12 @@ void fight(player &player1, monster &enemy){
       system("cls");
       stc(6); cout<<player1.name; stc(7); cout<<" won the battle against "; stc(4); cout<<enemy.name; stc(7); cout<<"!!\n";
       cout<<"You got a "<<enemy.drop<<" from him.\n";
-      sleep(5);
+      holder();
    }
    else{
       system("cls");
       stc(4); cout<<enemy.name; stc(7); cout<<" won the battle against "; stc(6); cout<<player1.name; stc(7); cout<<"!!\n";
-      sleep(5);
+      holder();
    }
 
    stc(7);
@@ -365,6 +366,6 @@ void displayHud(player &player1, monster &enemy){
 
 void holder(){
    string answer;
-   cout<<" ";
+   stc(8); cout<<"-Press Enter to continue "; stc(7);
    getline(cin, answer);
 }
