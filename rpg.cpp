@@ -85,12 +85,7 @@ int main(){
       return 0;
    }
    
-   void inBiome(player &player1){
-        if(player1.hp <= 0){
-          system("cls");
-          cout<<"You died, restart the game.";
-        }
-        else{
+ void inBiome(player &player1){
          srand(time(NULL));
          string scenario = "";
          int biomeColor;
@@ -117,6 +112,12 @@ int main(){
          string firstMove;
          bool idleing=true;
          while(idleing){
+            if(player1.hp <= 0){
+               idleing = false;
+               system("cls");
+               cout<<"You died, restart the game.";
+            }
+            else{
             cout<<"\n\n You are in a "; stc(biomeColor); cout<<scenario; stc(7); cout<<" biome, you can either: \n";
             cout<<" 1 - Explore around \n 2 - Stay still\n - ";
             getline(cin, firstMove);
@@ -131,9 +132,9 @@ int main(){
             else{
                   cout<<"Invalid\n";
             }
-        }
-     }
-   }
+           }
+         }
+}
 
 
 void fightScenario(player &player1){
