@@ -10,6 +10,7 @@ void fight(player &player1, monster &enemy);
 void getPlayerInfo(player &player1);
 void inBiome(player &player1);
 void displayHud(player &player1, monster &enemy);
+void holder();
 
 
 int main(){
@@ -236,7 +237,7 @@ void fight(player &player1, monster &enemy){
             stc(2); player1.hp > 0 ? cout<<player1.hp : cout<<0;
             stc(7); cout<<" HP\n";
 
-            system("pause");
+            holder();
 
             if(player1.hp <= 0){
                playerWon = false;
@@ -270,7 +271,7 @@ void fight(player &player1, monster &enemy){
                      stc(6); cout<<player1.name; stc(7); cout<<" did "; stc(12); cout<<player1.damageOne; stc(7); cout<<" damage and now enemy has ";
                      stc(2); enemy.hp > 0 ? cout<<enemy.hp : cout<<0;
                      stc(7); cout<<" HP\n";
-                     system("pause");
+                     holder();
                      selecting = false;
                      if(enemy.hp <=0){
                         fighthing = false;
@@ -283,7 +284,7 @@ void fight(player &player1, monster &enemy){
                      stc(6); cout<<player1.name; stc(7); cout<<" did "; stc(12); cout<<player1.damageTwo; stc(7); cout<<" damage and now enemy has ";
                      stc(2); enemy.hp > 0 ? cout<<enemy.hp : cout<<0;
                      stc(7); cout<<" HP\n";
-                     system("pause");
+                     holder();
                      selecting = false;
                      if(enemy.hp <=0){
                         fighthing = false;
@@ -317,7 +318,7 @@ void fight(player &player1, monster &enemy){
             stc(2); player1.hp > 0 ? cout<<player1.hp : cout<<0;
             stc(7); cout<<" HP\n";
 
-            system("pause");
+            holder();
         }
        sleep(2);
 
@@ -350,7 +351,7 @@ void getPlayerInfo(player &player1){
      cout<<"\n Second Ability: "; cout<<player1.secondAbility;
      cout<<"\n Item: ";  stc(14);  cout<<player1.item;   stc(7);
      cout<<'\n';
-     system("pause");
+     holder();
      system("cls");
 } 
 
@@ -360,4 +361,10 @@ void displayHud(player &player1, monster &enemy){
      cout<<" [  "; stc(2); cout<<enemy.hp; stc(7); cout<<" Hp ]\n";
      cout<<"\n\n["; stc(6); cout<<" "<<player1.name; stc(7); cout<<" ]";
      cout<<" [  "; stc(2); cout<<player1.hp; stc(7); cout<<" Hp   ]\n";
+}
+
+void holder(){
+   string answer;
+   cout<<" ";
+   getline(cin, answer);
 }
