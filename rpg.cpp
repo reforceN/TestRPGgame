@@ -1,7 +1,7 @@
 #include <iostream>
 #include <unistd.h>
-#include "handle.h"
-#include "rpginfo.h"
+#include "handle.hpp"
+#include "rpginfo.hpp"
 
 using namespace std;
 
