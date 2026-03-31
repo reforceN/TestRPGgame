@@ -2,6 +2,7 @@
 #include <unistd.h>
 #include "handle.hpp"
 #include "rpginfo.hpp"
+#include <synchapi.h>
 
 using namespace std;
 
@@ -10,8 +11,9 @@ void fight(player &player1, monster &enemy);
 void getPlayerInfo(player &player1);
 void inBiome(player &player1);
 void displayHud(player &player1, monster &enemy);
+void dialogShow(player &player1, monster &enemy, string abilityAnswer);
 void holder();
-
+void animate(string word, int time);
 
 int main(){
     string classChoice;
@@ -28,8 +30,8 @@ int main(){
      system("cls");
 
    do{
-     stc(9); cout<<"    Welcome to Vestrea RPG.  \n"; stc(7);
-     cout<<" Select your class: \n 1 - Archer \n 2 - Warrior \n 3 - Wizard \n - "; stc(7);
+     stc(9); animate("    Welcome to Vestrea RPG.  \n", 75); stc(7);
+     animate(" Select your class: \n 1 - Archer \n 2 - Warrior \n 3 - Wizard \n - ", 15); stc(7);
      getline(cin, classChoice);
       if(classChoice == "1"){
          playerClass = "Archer";
@@ -73,7 +75,7 @@ int main(){
         player1={playerName, playerClass, tempHp, tempSpeed, tempMana, tempVigor, tempAttack, 4 ,"Sword cut", "Punch", "Sword" };
     }
     else if(playerClass == "Wizard"){
-        player1={playerName, playerClass, tempHp, tempSpeed, tempMana, tempVigor, tempAttack + 4, 4 , "Spell", "Punch", "Staff" };
+        player1={playerName, playerClass, tempHp, tempSpeed, tempMana, tempVigor, tempAttack + 4, tempAttack , "Spell", "Punch", "Staff" };
     }
 
    cout<<"[Welcome "; stc(6); cout<<playerName; stc(7); cout<<" you are a "; stc(6); cout<<playerClass; stc(7); cout<<"!!]\n";
@@ -85,7 +87,7 @@ int main(){
       return 0;
    }
    
- void inBiome(player &player1){
+   void inBiome(player &player1){
          srand(time(NULL));
          string scenario = "";
          int biomeColor;
@@ -115,7 +117,7 @@ int main(){
             if(player1.hp <= 0){
                idleing = false;
                system("cls");
-               cout<<"You died, restart the game.";
+               animate("You died, restart the game.", 75);
             }
             else{
             cout<<"\n\n You are in a "; stc(biomeColor); cout<<scenario; stc(7); cout<<" biome, you can either: \n";
@@ -160,7 +162,7 @@ void fightScenario(player &player1){
 
      string optionFightOrRun;
      cout<<"You were walking around and found a "; stc(4); cout<<enemy.name; stc(7); cout<<"!!\n";
-     cout<<" 1 - Fight\n 2 - Try to escape\n - ";
+     animate(" 1 - Fight\n 2 - Try to escape\n - ", 15);
      getline(cin, optionFightOrRun);
 
      tempRandomNumber = (rand()%2) + 1;
@@ -168,13 +170,13 @@ void fightScenario(player &player1){
         switch(tempRandomNumber) {
            case 1:
              system("cls");
-             cout<<"You did escape.\n";
+             animate("You did escape.\n", 20);
              sleep(1);
              inBiome(player1);
              break;
            case 2:
              system("cls");
-             cout<<"You did not escape, you got to fight him.\n";
+             animate("You did not escape, you got to fight him.\n", 20);
              sleep(2);
              fight(player1, enemy);
              break;
@@ -254,8 +256,7 @@ void fight(player &player1, monster &enemy){
                displayHud(player1, enemy);
 
                do{
-                  cout<<"|-- Options --|\n";
-                  cout<<" 1 - Attack\n 2 - Check Status/Skills\n - ";
+                  animate("|-- Options --|\n 1 - Attack\n 2 - Check Status/Skills\n - ", 10);
                   getline(cin, answer);
                   cout<<'\n';
                }while(answer != "1" && answer != "2");
@@ -265,33 +266,14 @@ void fight(player &player1, monster &enemy){
                      cout<<"\n 1 - "<<player1.firstAbility<<"\n 2 - "<<player1.secondAbility<<"\n - ";
                      cin>>abilityAnswer;
                   }while(abilityAnswer != "1" && abilityAnswer != "2");
-
-                  if(abilityAnswer == "1"){
-                     cout<<enemy.name<<" had "; stc(2); cout<<enemy.hp; stc(7); cout<<" HP, ";
-                     enemy.hp -= player1.damageOne; 
-                     stc(6); cout<<player1.name; stc(7); cout<<" did "; stc(12); cout<<player1.damageOne; stc(7); cout<<" damage and now enemy has ";
-                     stc(2); enemy.hp > 0 ? cout<<enemy.hp : cout<<0;
-                     stc(7); cout<<" HP\n";
+                     dialogShow(player1, enemy, abilityAnswer);
                      holder();
+                     sleep(3);
                      selecting = false;
                      if(enemy.hp <=0){
                         fighthing = false;
                         playerWon = true;
                      }
-                  }
-                  else if(abilityAnswer == "2"){
-                     cout<<enemy.name<<" had "; stc(2); cout<<enemy.hp; stc(7); cout<<" HP, ";
-                     enemy.hp -= player1.damageTwo; 
-                     stc(6); cout<<player1.name; stc(7); cout<<" did "; stc(12); cout<<player1.damageTwo; stc(7); cout<<" damage and now enemy has ";
-                     stc(2); enemy.hp > 0 ? cout<<enemy.hp : cout<<0;
-                     stc(7); cout<<" HP\n";
-                     holder();
-                     selecting = false;
-                     if(enemy.hp <=0){
-                        fighthing = false;
-                        playerWon = true;
-                     }
-                  }
                }
                else if(answer == "2"){
                   getPlayerInfo(player1);
@@ -365,8 +347,30 @@ void displayHud(player &player1, monster &enemy){
      cout<<" [  "; stc(2); cout<<player1.hp; stc(7); cout<<" Hp   ]\n";
 }
 
+void dialogShow(player &player1, monster &enemy, string abilityAnswer){
+   int damage;
+   if(abilityAnswer == "1"){
+      damage = player1.damageOne;
+   }
+   else if(abilityAnswer == "2"){
+      damage = player1.damageTwo;
+   }
+     cout<<enemy.name<<" had "; stc(2); cout<<enemy.hp; stc(7); cout<<" HP, ";
+     enemy.hp -= damage; 
+     stc(6); cout<<player1.name; stc(7); cout<<" did "; stc(12); cout<<damage; stc(7); cout<<" damage and now enemy has ";
+     stc(2); enemy.hp > 0 ? cout<<enemy.hp : cout<<0;
+     stc(7); cout<<" HP\n";
+}
+
 void holder(){
    string answer;
    stc(8); cout<<"-Press Enter to continue "; stc(7);
    getline(cin, answer);
+}
+
+void animate(string word, int time){
+     for(char n:word){
+       cout<<n;
+       Sleep(time);
+     }
 }
