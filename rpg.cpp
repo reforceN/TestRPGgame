@@ -2,7 +2,6 @@
 #include <unistd.h>
 #include "handle.hpp"
 #include "rpginfo.hpp"
-#include <synchapi.h>
 
 using namespace std;
 
